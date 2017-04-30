@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mashirong.IDao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.mashirong.domain.Order">
+    <id column="orderId" jdbcType="INTEGER" property="orderid" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="shopId" jdbcType="INTEGER" property="shopid" />
+    <result column="flowNum" jdbcType="VARCHAR" property="flownum" />
+    <result column="orderTime" jdbcType="TIMESTAMP" property="ordertime" />
+    <result column="orderNote" jdbcType="VARCHAR" property="ordernote" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    orderId, userId, shopId, flowNum, orderTime, orderNote
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ordertb
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </select>
+  <select id="getOrderByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ordertb
+    where userId = #{userid,jdbcType=INTEGER} order by orderTime desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ordertb
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mashirong.domain.Order" keyProperty="orderid" useGeneratedKeys="true">
+    insert into ordertb (orderId, userId, shopId, 
+      flowNum, orderTime, orderNote
+      )
+    values (#{orderid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{shopid,jdbcType=INTEGER}, 
+      #{flownum,jdbcType=VARCHAR}, #{ordertime,jdbcType=TIMESTAMP}, #{ordernote,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mashirong.domain.Order">
+    insert into ordertb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        orderId,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="shopid != null">
+        shopId,
+      </if>
+      <if test="flownum != null">
+        flowNum,
+      </if>
+      <if test="ordertime != null">
+        orderTime,
+      </if>
+      <if test="ordernote != null">
+        orderNote,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderid != null">
+        #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="flownum != null">
+        #{flownum,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertime != null">
+        #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordernote != null">
+        #{ordernote,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mashirong.domain.Order">
+    update ordertb
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="shopid != null">
+        shopId = #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="flownum != null">
+        flowNum = #{flownum,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertime != null">
+        orderTime = #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordernote != null">
+        orderNote = #{ordernote,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mashirong.domain.Order">
+    update ordertb
+    set userId = #{userid,jdbcType=INTEGER},
+      shopId = #{shopid,jdbcType=INTEGER},
+      flowNum = #{flownum,jdbcType=VARCHAR},
+      orderTime = #{ordertime,jdbcType=TIMESTAMP},
+      orderNote = #{ordernote,jdbcType=VARCHAR}
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+</mapper>

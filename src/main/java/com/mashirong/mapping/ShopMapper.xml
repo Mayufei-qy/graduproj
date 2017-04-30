@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mashirong.IDao.ShopMapper">
+  <resultMap id="BaseResultMap" type="com.mashirong.domain.Shop">
+    <id column="shopId" jdbcType="INTEGER" property="shopid" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="shopName" jdbcType="VARCHAR" property="shopname" />
+    <result column="ownerName" jdbcType="VARCHAR" property="ownername" />
+    <result column="idcNum" jdbcType="VARCHAR" property="idcnum" />
+    <result column="licenseNum" jdbcType="VARCHAR" property="licensenum" />
+    <result column="mainDishId" jdbcType="INTEGER" property="maindishid" />
+    <result column="shopAddress" jdbcType="VARCHAR" property="shopaddress" />
+    <result column="shopPhoneNum" jdbcType="VARCHAR" property="shopphonenum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    shopId, userId, shopName, ownerName, idcNum, licenseNum, mainDishId, shopAddress, 
+    shopPhoneNum
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shop
+    where shopId = #{shopid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByUserId" parameterType="int" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shop
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from shop
+    where shopId = #{shopid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mashirong.domain.Shop">
+    insert into shop (shopId, userId, shopName, 
+      ownerName, idcNum, licenseNum, 
+      mainDishId, shopAddress, shopPhoneNum
+      )
+    values (#{shopid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{shopname,jdbcType=VARCHAR}, 
+      #{ownername,jdbcType=VARCHAR}, #{idcnum,jdbcType=VARCHAR}, #{licensenum,jdbcType=VARCHAR}, 
+      #{maindishid,jdbcType=INTEGER}, #{shopaddress,jdbcType=VARCHAR}, #{shopphonenum,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mashirong.domain.Shop">
+    insert into shop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopid != null">
+        shopId,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="shopname != null">
+        shopName,
+      </if>
+      <if test="ownername != null">
+        ownerName,
+      </if>
+      <if test="idcnum != null">
+        idcNum,
+      </if>
+      <if test="licensenum != null">
+        licenseNum,
+      </if>
+      <if test="maindishid != null">
+        mainDishId,
+      </if>
+      <if test="shopaddress != null">
+        shopAddress,
+      </if>
+      <if test="shopphonenum != null">
+        shopPhoneNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopid != null">
+        #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="shopname != null">
+        #{shopname,jdbcType=VARCHAR},
+      </if>
+      <if test="ownername != null">
+        #{ownername,jdbcType=VARCHAR},
+      </if>
+      <if test="idcnum != null">
+        #{idcnum,jdbcType=VARCHAR},
+      </if>
+      <if test="licensenum != null">
+        #{licensenum,jdbcType=VARCHAR},
+      </if>
+      <if test="maindishid != null">
+        #{maindishid,jdbcType=INTEGER},
+      </if>
+      <if test="shopaddress != null">
+        #{shopaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shopphonenum != null">
+        #{shopphonenum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mashirong.domain.Shop">
+    update shop
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="shopname != null">
+        shopName = #{shopname,jdbcType=VARCHAR},
+      </if>
+      <if test="ownername != null">
+        ownerName = #{ownername,jdbcType=VARCHAR},
+      </if>
+      <if test="idcnum != null">
+        idcNum = #{idcnum,jdbcType=VARCHAR},
+      </if>
+      <if test="licensenum != null">
+        licenseNum = #{licensenum,jdbcType=VARCHAR},
+      </if>
+      <if test="maindishid != null">
+        mainDishId = #{maindishid,jdbcType=INTEGER},
+      </if>
+      <if test="shopaddress != null">
+        shopAddress = #{shopaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shopphonenum != null">
+        shopPhoneNum = #{shopphonenum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shopId = #{shopid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mashirong.domain.Shop">
+    update shop
+    set userId = #{userid,jdbcType=INTEGER},
+      shopName = #{shopname,jdbcType=VARCHAR},
+      ownerName = #{ownername,jdbcType=VARCHAR},
+      idcNum = #{idcnum,jdbcType=VARCHAR},
+      licenseNum = #{licensenum,jdbcType=VARCHAR},
+      mainDishId = #{maindishid,jdbcType=INTEGER},
+      shopAddress = #{shopaddress,jdbcType=VARCHAR},
+      shopPhoneNum = #{shopphonenum,jdbcType=VARCHAR}
+    where shopId = #{shopid,jdbcType=INTEGER}
+  </update>
+</mapper>

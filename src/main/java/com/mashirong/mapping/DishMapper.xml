@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mashirong.IDao.DishMapper">
+  <resultMap id="BaseResultMap" type="com.mashirong.domain.Dish">
+    <id column="dishId" jdbcType="INTEGER" property="dishid" />
+    <result column="shopId" jdbcType="INTEGER" property="shopid" />
+    <result column="dishName" jdbcType="VARCHAR" property="dishname" />
+    <result column="dishPrice" jdbcType="DECIMAL" property="dishprice" />
+    <result column="salePrice" jdbcType="DECIMAL" property="saleprice" />
+    <result column="dishDesc" jdbcType="VARCHAR" property="dishdesc" />
+    <result column="dishImage" jdbcType="VARCHAR" property="dishimage" />
+    <result column="salseNum" jdbcType="INTEGER" property="salsenum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    dishId, shopId, dishName, dishPrice, salePrice, dishDesc, dishImage, salseNum
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dish
+    where dishId = #{dishid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectWithSearch" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dish
+    WHERE 1=1
+    <if test="dishname != null">
+       AND dishname LIKE CONCAT('%', #{dishname}, '%')
+    </if>
+  </select>
+  
+  <select id="selectAllDishInTheShop" parameterType="int" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dish
+    WHERE shopId = #{shopid,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dish
+    where dishId = #{dishid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mashirong.domain.Dish">
+    insert into dish (dishId, shopId, dishName, 
+      dishPrice, salePrice, dishDesc, 
+      dishImage, salseNum)
+    values (#{dishid,jdbcType=INTEGER}, #{shopid,jdbcType=INTEGER}, #{dishname,jdbcType=VARCHAR}, 
+      #{dishprice,jdbcType=DECIMAL}, #{saleprice,jdbcType=DECIMAL}, #{dishdesc,jdbcType=VARCHAR}, 
+      #{dishimage,jdbcType=VARCHAR}, #{salsenum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mashirong.domain.Dish">
+    insert into dish
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dishid != null">
+        dishId,
+      </if>
+      <if test="shopid != null">
+        shopId,
+      </if>
+      <if test="dishname != null">
+        dishName,
+      </if>
+      <if test="dishprice != null">
+        dishPrice,
+      </if>
+      <if test="saleprice != null">
+        salePrice,
+      </if>
+      <if test="dishdesc != null">
+        dishDesc,
+      </if>
+      <if test="dishimage != null">
+        dishImage,
+      </if>
+      <if test="salsenum != null">
+        salseNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dishid != null">
+        #{dishid,jdbcType=INTEGER},
+      </if>
+      <if test="shopid != null">
+        #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="dishname != null">
+        #{dishname,jdbcType=VARCHAR},
+      </if>
+      <if test="dishprice != null">
+        #{dishprice,jdbcType=DECIMAL},
+      </if>
+      <if test="saleprice != null">
+        #{saleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="dishdesc != null">
+        #{dishdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="dishimage != null">
+        #{dishimage,jdbcType=VARCHAR},
+      </if>
+      <if test="salsenum != null">
+        #{salsenum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mashirong.domain.Dish">
+    update dish
+    <set>
+      <if test="shopid != null">
+        shopId = #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="dishname != null">
+        dishName = #{dishname,jdbcType=VARCHAR},
+      </if>
+      <if test="dishprice != null">
+        dishPrice = #{dishprice,jdbcType=DECIMAL},
+      </if>
+      <if test="saleprice != null">
+        salePrice = #{saleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="dishdesc != null">
+        dishDesc = #{dishdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="dishimage != null">
+        dishImage = #{dishimage,jdbcType=VARCHAR},
+      </if>
+      <if test="salsenum != null">
+        salseNum = #{salsenum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where dishId = #{dishid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mashirong.domain.Dish">
+    update dish
+    set shopId = #{shopid,jdbcType=INTEGER},
+      dishName = #{dishname,jdbcType=VARCHAR},
+      dishPrice = #{dishprice,jdbcType=DECIMAL},
+      salePrice = #{saleprice,jdbcType=DECIMAL},
+      dishDesc = #{dishdesc,jdbcType=VARCHAR},
+      dishImage = #{dishimage,jdbcType=VARCHAR},
+      salseNum = #{salsenum,jdbcType=INTEGER}
+    where dishId = #{dishid,jdbcType=INTEGER}
+  </update>
+</mapper>
