@@ -39,7 +39,7 @@ $(document).ready(function(){
 	    <div class="container-fluid">
 	    	<div class="row">
 	    		<div class="navbar-header col-md-2">
-			        <a class="navbar-brand" href="#">首页</a>
+			        <a class="navbar-brand" href="<%=path %>">首页</a>
 			    </div>
 			    <div class="navbar-header col-md-2">
 			        <a class="navbar-brand" href="" onclick="islogined();return false;">申请成为商家</a>
