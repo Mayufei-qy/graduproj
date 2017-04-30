@@ -20,7 +20,7 @@ public class EmailUtil {
     public static final String PROTOCOL = "pop3";
     public static final int PORT = 25;
     public static final String FROM = "weisen.yang@hand-china.com";//发件人的email
-    public static final String PWD = "wsx965874";//发件人密码
+    public static final String PWD ="";//发件人密码
 
     /**
      * 获取Session
