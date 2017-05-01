@@ -9,6 +9,6 @@ public class ApplyToAdmin {
 	
 	@RequestMapping("/submitShopInfo")
 	public String submitShopInfo(){
-		return "/blank.jsp";
+		return "/shopinfosubmit.jsp";
 	}
 }

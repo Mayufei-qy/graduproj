@@ -17,26 +17,22 @@
 <!-- AdminLTE Skins. Choose a skin from the css/skins
    folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="<%=mypath %>/static/sellerpagestyle/_all-skins.min.css">
-<title>商家主页</title>
+<title>外卖点餐系统商家主页</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
   <header class="main-header">
-    <!-- Logo -->
     <a href="" class="logo"  style="background:black;">
       <span style="font-size:20px;color:white;">商家中心</span>
     </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
+    <nav class="navbar navbar-static-top" role="navigation">
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-	  
 	  <div class="container-fluid">
 		  <div class="row">
-		  	<div class="col-md-9">
+		  	<div class="col-md-8">
 	  		  <div style="width:280px;">
 		      	<form action="#" method="get" class="sidebar-form" style="">
 					<div class="input-group" >
@@ -49,25 +45,27 @@
 				</form> 
 			  </div>
 		  	</div>
-		  	<div class="col-md-2">
-				<div style="height:50px;">
-					<button style="border:none;border-radius:3px;padding:3px 12px;margin-top:12px;color:black;font-size:16px;">${user.email}</button>
-					<a href="<%=mypath %>/login/logout">退出</a>
+		  	<div class="col-md-3">
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+					  <li class="dropdown user user-menu">
+						<a>
+						  <span class="glyphicon glyphicon-user"></span>
+						  <span>${user.email}</span>
+						</a>
+					  </li>
+					  <li>
+						<a href="<%=mypath %>/login/logout"><span class="glyphicon glyphicon-log-out"></span></a>
+					  </li>
+					</ul>
 				</div>
 		  	</div>
 		  </div>
 	  </div>
-	  
-
-	  
-
     </nav>
   </header>
-  <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li>
           <a href="">
@@ -127,30 +125,28 @@
             <li><a href=""><i class="fa fa-circle-o"></i> blank</a></li>
           </ul>
         </li>
-        
       </ul>
     </section>
-    <!-- /.sidebar -->
   </aside>
-  
-  <!-- Content -->
+
   <div class="content-wrapper">
-	<span>${shop.shopname}</span><br/>
-	<span>${shop.ownername}</span><br/>
-	<span>${shop.shopaddress}</span><br/>
+    <!-- Main content -->
+    <section class="content">
+		<span>${shop.shopname}</span><br/>
+		<span>${shop.ownername}</span><br/>
+		<span>${shop.shopaddress}</span><br/>
+    </section>
   </div>
-  
+
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 2.3.8
+      Anything you want
     </div>
-    <strong>Copyright &copy; 2014-2016</strong> All rights
-    reserved.
+    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
   </footer>
+  <div class="control-sidebar-bg"></div>
 </div>
-<!-- jQuery 2.2.3 -->
 <script type="text/javascript" src="<%=mypath %>/static/jquery/jquery.min.js"></script>
-<!-- AdminLTE App -->
 <script src="<%=mypath %>/static/js/app.min.js"></script>
 </body>
 </html>
