@@ -63,14 +63,14 @@
 					<span href="javascript:;" class="tab">
 						<span class="title">订单查询</span>
 						<ul>
-							<li><a href="/customer/order/list" class="borderradius-1 order-today active">我的订单</a></li>
+							<li><a href="<%=path %>/toUserOrderListPage" id="myorderslia" class="borderradius-1 order-today active">我的订单</a></li>
 						</ul>
 					</span>  
 					<span href="javascript:;" class="tab">
 						<span class="title">账号管理</span>
 						<ul>
-							<li><a href="/account/setting" class="borderradius-1 my-account ">我的账号</a></li>
-							<li><a href="/favorite/restaurant" class="borderradius-1 my-favorite ">我的收藏</a></li>
+							<li><a href="<%=path %>/toUserAccount" id="myaccountlia" class="borderradius-1 my-account ">我的账号</a></li>
+							<li><a href="/favorite/restaurant" id="myfavoritelia" class="borderradius-1 my-favorite ">我的收藏</a></li>
 						</ul>
 					</span>
 				</div>
@@ -120,10 +120,10 @@
 	</div>
 	<script type="text/javascript">
 		var show = $("#haveordersdomain").val();
-		if(show = 'true'){
+		if(show == 'true'){
 			$("#orderlistshow").css("display","block");
 			$("#noorderlistshow").css("display","none");
-		}else{
+		}else {
 			$("#orderlistshow").css("display","none");
 			$("#noorderlistshow").css("display","block");
 		}

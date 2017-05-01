@@ -116,8 +116,12 @@ public class OrderController {
 			}
 			/*System.out.println(user);
 			System.out.println(orderList.size());*/
+			String flagStr = "false";
+			if(orderList.size() >= 1){
+				flagStr = "true";
+			}
 			model.addAttribute("orderlist", orderList);
-			model.addAttribute("haveorders", "true");
+			model.addAttribute("haveorders", flagStr);
 			return "/userorderlist.jsp";
 		}else{
 			return "redirect:/";

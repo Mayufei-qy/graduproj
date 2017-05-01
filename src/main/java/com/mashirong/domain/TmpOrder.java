@@ -7,6 +7,8 @@ public class TmpOrder {
 	private String orderTime;
 	private int packingBox;
 	private float totalPrice;
+	private List<OrderCon> dishList;
+	
 	public int getPackingBox() {
 		return packingBox;
 	}
@@ -19,7 +21,6 @@ public class TmpOrder {
 	public void setTotalPrice(float totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	private List<OrderCon> dishList;
 	public String getFlowNum() {
 		return flowNum;
 	}
