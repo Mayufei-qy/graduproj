@@ -271,19 +271,6 @@ function uploadFile(target) {
 }
 function addAdish(){
 	$("#addDishModelBox").modal("show");
-	/*var table = $('#example1').DataTable();
-	var rowNode = table.row.add( {
-        "dishname":       "Tiger Nixon",
-        "dishprice":   "System Architect",
-        "saleprice":     "$3,120",
-        "dishdesc": "2011/04/25",
-        "dishimage":     "Edinburgh",
-    } ).draw().node();;
-	
-	$( rowNode )
-    	.css( 'color', '#3c8dbc' )
-    	.animate( { color: 'black' } );
-	table.page( 'last' ).draw( false ); */
 }
 function imageUpLoadAndFormSubmit(){
 	$("#newDishForm").ajaxSubmit({
