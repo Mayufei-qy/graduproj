@@ -27,4 +27,16 @@ public class DishServiceImpl implements DishService{
 		return dm.insert(dish);
 	}
 
+	@Override
+	public List<Dish> getAllDishes(int shopid) {
+		// TODO Auto-generated method stub
+		return dm.selectAllDishInTheShop(shopid);
+	}
+
+	@Override
+	public int deleteDishById(int dishid) {
+		// TODO Auto-generated method stub
+		return dm.deleteByPrimaryKey(dishid);
+	}
+
 }

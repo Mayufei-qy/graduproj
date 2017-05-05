@@ -7,15 +7,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<!-- Bootstrap 3.3.6 -->
 <link rel="stylesheet" href="<%=mypath %>/static/bootstrap/css/bootstrap.min.css">
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-<!-- Theme style -->
+<link rel="stylesheet" href="<%=mypath%>/static/font-awesome-4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="<%=mypath %>/static/sellerpagestyle/AdminLTE.min.css">
-<!-- AdminLTE Skins. Choose a skin from the css/skins
-   folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="<%=mypath %>/static/sellerpagestyle/_all-skins.min.css">
 <title>外卖点餐系统商家主页</title>
 </head>
@@ -48,7 +42,7 @@
 		  	<div class="col-md-3">
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
-					  <li class="dropdown user user-menu">
+					  <li>
 						<a>
 						  <span class="glyphicon glyphicon-user"></span>
 						  <span>${user.email}</span>
@@ -68,7 +62,7 @@
     <section class="sidebar">
       <ul class="sidebar-menu">
         <li>
-          <a href="">
+          <a href="<%=mypath %>/login/toSellerPage">
             <span>商家主页</span>
           </a>
         </li>
@@ -87,18 +81,18 @@
           </ul>
         </li>
         <li class="treeview">
-          <a href="">
+          <a href="<%=mypath %>/toSellerDishPage">
             <span>菜品管理</span>
-            <span class="pull-right-container">
+            <!-- <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
-            </span>
+            </span> -->
           </a>
-          <ul class="treeview-menu">
+          <!-- <ul class="treeview-menu">
             <li><a href=""><i class="fa fa-circle-o"></i> blank</a></li>
             <li><a href=""><i class="fa fa-circle-o"></i> blank</a></li>
             <li><a href=""><i class="fa fa-circle-o"></i> blank</a></li>
 
-          </ul>
+          </ul> -->
         </li>
         <li class="treeview">
           <a href="">

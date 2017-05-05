@@ -82,4 +82,11 @@ public class Dish {
     public void setSalsenum(Integer salsenum) {
         this.salsenum = salsenum;
     }
+
+	@Override
+	public String toString() {
+		return "Dish [dishid=" + dishid + ", shopid=" + shopid + ", dishname=" + dishname + ", dishprice=" + dishprice
+				+ ", saleprice=" + saleprice + ", dishdesc=" + dishdesc + ", dishimage=" + dishimage + ", salsenum="
+				+ salsenum + "]";
+	}
 }
