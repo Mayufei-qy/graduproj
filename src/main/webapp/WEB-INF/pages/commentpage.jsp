@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <%
 	String path = request.getContextPath();
@@ -10,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="<%=path %>/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="<%=path %>/static/mycss/cart.css" rel="stylesheet"> 
+<link href="<%=path %>/static/mycss/commentpage.css" rel="stylesheet"> 
 <link href="<%=path %>/static/mycss/shoppage.css" rel="stylesheet">
 <link href="<%=path %>/static/mycss/loginpage.css" rel="stylesheet">
 <script src="<%=path %>/static/jquery/jquery.min.js"></script>
@@ -85,54 +86,6 @@ $(document).ready(function(){
 	    </div>
 	</nav>
 
-	<div class="shopping-cart clearfix" data-status="1" data-poiname="潮汕砂锅粥" data-poiid="8446">
-	    <form method="post" action="/order/shoppingcart" id="shoppingCartForm">
-
-          <div class="first-to-app clearfix j-first-to-app">
-            <span class="fl">电脑下单不享优惠了哦，优惠活动手机专享~</span>
-
-          </div>
-
-  	    <div class="order-list">
-  	      <div class="title">
-  	        <span class="fl dishes">菜品<a href="javascript:removeCartItems(${shopinfo.shopid});" class="clear-cart">[清空]</a></span>
-  	        <span class="fl">份数</span>
-  	        <span class="fl ti-price">价格</span>
-  	      </div>
-  	      <ul id="cartItems" style="height: auto; overflow: visible;">
-  	      	
-  	      </ul>
-  	      
-  	      <div class="other-charge">
-  	        <div class="clearfix packing-cost">
-  	          <span class="fl">包装盒</span>
-  	          <span class="fr boxtotalprice" id="packingBoxSpan">￥0</span>
-  	        </div>
-  	        <!-- <div class="clearfix delivery-cost">
-  	          <span class="fl">配送费(不计入起送价)</span>
-  	          <span class="fr shippingfee">￥0</span>
-  	        </div> -->
-  	      </div>
-  	      <div class="privilege hidden">
-  	      </div>
-  	      <div class="total">共<span id = "dishCountSpanId" class="totalnumber">0</span>份，总计<span id = "countSpanId" class="bill">￥0</span></div>
-  	    </div>
-  	    
-  	    <div class="footer clearfix">
-          <div class="logo icon fl"></div>
-          <div class="brief-order fl">
-            <span class="count"></span>
-            <span class="price"></span>
-          </div>
-          <div class="fr">
-            <a class="ready-pay borderradius-2" href="javascript:;">还差<span data-left="20" class="margintominprice">20</span>元起送</a>
-            <div class="go-pay borderradius-2" onclick="submitCartData(${shopinfo.shopid });">去下单</div>
-            <input type="hidden" value="" class="order-data" name="shop_cart">
-          </div>
-        </div>
-      </form>
-    </div>
-
 
 	<div class="container">
 		<div class="row title">
@@ -142,10 +95,10 @@ $(document).ready(function(){
 					<div class="rest-info">
 					    <div class="right-bar fr clearfix ct-lightgrey">
 
-					      <a href="<%=path %>/getComment?shopid=${shopinfo.shopid }" class="fl average-speed" style="text-decoration: none;">
+					      <div class="fl average-speed">
 					        <div class="desc">评价</div>
 					        <div class="nu">(11111)</div>
-					      </a>
+					      </div>
 
 					      <div class="fl in-ti">
 					        <div class="desc">收藏</div>
@@ -184,42 +137,31 @@ $(document).ready(function(){
 
 					<div class="food-list fl">
 					  	<div class="food-nav">
-
-					    	<div class="category">
-						        <h3 class="title title-0" title="">
-						          <span class="tag-na">    本店提供以下菜品</span>
-						        </h3>
-						        <div class="pic-food-cont clearfix">
-						        
-						        	<c:forEach items="${dish_of_shop}" var="o" varStatus="status">
-						        		<div class="j-pic-food pic-food  " id="232080519">
-										    <div class="avatar">
-										      <img src="${o.dishimage}" class="food-shape scroll-loading">
-										    </div>
-										    <div class="np clearfix">
-										      <span class="name fl" title="香菇鸡肉粥">${o.dishname}</span>
-										    </div>
-			    							<div class="sale-info clearfix">
-										        <div class="fr zan-count">
-										          <i class="icon i-zan"></i>
-										          <span class="cc-lightred-new">(2)</span>
-										        </div>
-										      <div class="sold-count ct-lightgrey"><span>月售：${o.salsenum} 份</span></div>
-										    </div>
-	
-										    <div class="labels clearfix">
-										        <a href="javascript:addToCart(${shopinfo.shopid},${o.dishid},'${o.dishname}',${o.dishprice});" class="add fr icon i-addcart j-addcart"></a>
-										        <span id="food232080519-cart-num" class="pic-food-cart-num fr" style="display:none;">0</span>
-	
-										      <div class="price fl">
-										          <div class="only">${o.dishprice}/份</div>
-										      </div>
-										    </div>
-	 									</div>
-									</c:forEach>
-						        
-	  							</div>
-         					</div>
+							<div class="list">
+							    <div class="loading" style="display: none;"></div>
+							    <div class="comment-list-wrapper">
+									<ul>  
+										<c:forEach var="data" items="${commentList}" varStatus="status">
+											<li class="reply-field">
+												<div class="info clearfix">    
+													<span class="fr time">评价时间&nbsp;&nbsp;<fmt:formatDate value="${data.commtime}" pattern="yyyy-MM-dd"/></span>  
+													<span class="name">${data.email}</span>      
+													<span>总体评价：${data.score}</span>             
+												</div>    
+												<div class="user-reply">${data.commcontent}</div>
+												<c:choose>  
+										            <c:when test="${not empty data.list}">		
+										            	<div class="bizz-reply">餐厅回复：${data.list[0].commcontent}</div>						                
+										            </c:when>  
+										            <c:otherwise>
+										            
+									            	</c:otherwise>
+									            </c:choose>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+							</div>
       					</div>
  				 	</div>
      			</div>
@@ -254,91 +196,6 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
-	
-	<script>
-		window.totalPrice = 0;
-		window.dishcount = 0;
-		function addToCart(shopid, dishid, dishname, dishprice){
-			var cook = shopid+'cartStr'+dishid;
-			if ($.cookie(cook) == null) { 
-			       var o = { shopId:shopid, dishId:dishid, dishName: dishname, dishPrice: dishprice, dishNum:1, orderNote:'' }; 
-			       var str = JSON.stringify(o);
-			       $.cookie(cook, str, { 
-			         expires:1
-			       });
-			       addCartItem(o);
-			       window.totalPrice+=dishprice;
-			       window.dishcount++;
-			       /* alert(o.dishName);  */
-			 } else { 
-			       var str1 = $.cookie(cook); 
-			       var o1 = JSON.parse(str1);
-			       o1.dishNum++;
-			       var str = JSON.stringify(o1);
-			       $.cookie(cook, str, { 
-			         expires:1
-			       });
-			       var inputid = dishid + 'dishNumberIpt';
-			       $("#" + inputid).val(o1.dishNum);
-			       window.totalPrice+=dishprice;
-			       window.dishcount++;
-			       /* alert(o1.dishName); */
-			} 
-			$("#packingBoxSpan").html('￥' + window.dishcount);
-			$("#countSpanId").html('￥' + (window.totalPrice + window.dishcount));
-			$("#dishCountSpanId").html(window.dishcount);
-		}
-		
-		function addCartItem(data){
-			var str = '<li class="clearfix">'
-	      		+'<div class="fl na clearfix">'    
-	      		+'<div style="text-indent:12px;">' + data.dishName + '</div>'     
-	      		+'</div>'    
-	      		+'<div class="fl modify clearfix">'    
-	      		+'<a href="javascript:;" class="fl minus">-</a>'    
-	      		+'<input id="' + data.dishId + 'dishNumberIpt" class="fl txt-count" value="'
-	      		+ data.dishNum
-	      		+ '" maxlength="2" type="text">'    
-	      		+'<a href="javascript:;" class="fl plus">+</a>'  
-	      		+'</div>'  
-	      		+'<div class="fl pri ">'    
-	      		+'<span>¥' + data.dishPrice +'</span>'  
-	      		+'</div>'  
-	      		+'</li>';
-			$("#cartItems").append(str);
-		}
-		
-		function removeCartItems(shopid){
-			var tempStr = shopid+'cartStr';
-			var strCookie = document.cookie;
-			var arrCookie = strCookie.split("; ");
-			for(var i=0;i<arrCookie.length;i++){
-				var arr = arrCookie[i].split("=");
-				var isThisShopStr = arr[0].indexOf(tempStr);
-				if(isThisShopStr == 0){
-					$.cookie(arr[0],'',{expires:-1});
-				}
-			}
-			$.cookie('countCook','',{expires:-1});
-			$("#countSpanId").html('￥' + 0);
-			$("#packingBoxSpan").html('￥' + 0);
-			$("#dishCountSpanId").html(0);
-			$("#cartItems li").remove();
-			window.totalPrice = 0;
-			window.dishcount = 0;
-		}
-		
-		function submitCartData(shopid){
-			var logStr = $("#dropdownMenu1").val();
-			if(logStr == undefined){
-				alert('请先登录');
-				$('.f2').click();
-			}else{
-				location.href='<%=path %>/toConfigOrderPage?shopId=' + shopid;
-			}
-			
-		}
-	</script>
 	
 	<script type="text/javascript">
 	

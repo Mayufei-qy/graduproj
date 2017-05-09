@@ -3,6 +3,7 @@ package com.mashirong.domain;
 import java.util.List;
 
 public class TmpOrder {
+	private Integer shopid;
 	private String flowNum;
 	private String orderTime;
 	private int packingBox;
@@ -39,5 +40,10 @@ public class TmpOrder {
 	public void setDishList(List<OrderCon> dishList) {
 		this.dishList = dishList;
 	}
-
+	public Integer getShopid() {
+		return shopid;
+	}
+	public void setShopid(Integer shopid) {
+		this.shopid = shopid;
+	}
 }

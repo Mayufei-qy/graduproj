@@ -100,6 +100,7 @@ public class OrderController {
 				int packingBox = 0;
 				float totalPrice = 0;
 				TmpOrder tmpOrder = new TmpOrder();
+				tmpOrder.setShopid(order.getShopid());
 				tmpOrder.setFlowNum(order.getFlownum());
 				tmpOrder.setOrderTime(df.format(order.getOrdertime()));
 				List<OrderCon> tmpList = ocs.getOrderConsOfOrder(order.getOrderid());

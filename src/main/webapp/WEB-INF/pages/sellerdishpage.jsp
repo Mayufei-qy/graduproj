@@ -18,7 +18,7 @@
 	display:inline;
 }
 </style>
-<title>外卖点餐系统商家主页</title>
+<title>外卖点餐系统菜品管理</title>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -82,9 +82,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-circle-o"></i> blank</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i> blank</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i> blank</a></li>
+            <li><a href=""><i class="fa fa-circle-o"></i> 新订单</a></li>
+            <li><a href=""><i class="fa fa-circle-o"></i> 催&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单</a></li>
+            <li><a href=""><i class="fa fa-circle-o"></i> 历史订单</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -92,31 +92,7 @@
             <span>菜品管理</span>
           </a>
         </li>
-        <li class="treeview">
-          <a href="">
-            <span>blank</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-circle-o"></i> blank</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i> blank</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i> blank</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="">
-            <span>blank</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-circle-o"></i> blank</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i> blank</a></li>
-          </ul>
-        </li>
+        
       </ul>
     </section>
   </aside>
@@ -211,6 +187,53 @@
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
+	<div class="modal fade" tabindex="-1" role="dialog" id="UpdateDishModel">
+	  <div class="modal-dialog" role="document" style="width:400px;">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h5 class="modal-title"><b>修改菜品</b></h5>
+	      </div>
+	      <div class="modal-body">
+	       	<form role="form" id="updateDishForm" enctype="multipart/form-data">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="updateDishName">菜品名称：</label>
+                  <input name="dishname" class="form-control" id="updateDishName">
+                </div>
+                <div class="form-group">
+                  <label for="updateDishPrice">菜品价格：</label>
+                  <input name="dishprice" class="form-control" id="updateDishPrice">
+                </div>
+                <div class="form-group">
+                  <label for="updateDIshSalePrice">优惠价格：</label>
+                  <input name="saleprice" class="form-control" id="updateDIshSalePrice">
+                </div>
+                <div class="form-group">
+                  <label for="updateDishDescriptioin">菜品描述：</label>
+                  <input name="dishdesc" class="form-control" id="updateDishDescriptioin">
+                </div>
+                <div class="form-group">
+                  <label for="updateDishImageName">菜品图片：</label>
+                  <input name="dishimage" class="form-control" id="updateDishImageName" style="width:65%;">
+                  <span>
+				        <button type="button" class="btn btn-info btn-flat" onclick="myFileUpload2()" style="vertical-align: baseline;"><span class="glyphicon glyphicon-folder-open"></span></button>
+				  </span>
+                </div>
+                <div class="form-group">
+					<input type="file" name="imageIptfile" id="hiddenFileInput2" name="imageIpt" onchange='uploadFile2(this)' style="display:none;">
+                </div>
+              </div>
+            </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	        <button type="button" class="btn btn-primary" onclick="imageUpLoadAndFormSubmit()">确定</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       Anything you want
@@ -240,7 +263,7 @@ $('#example1').DataTable( {
             "data": null,  
             "orderable": false,  
             "border-bottom":"1px solid red",
-            "defaultContent": '<button type="button" class="btn btn-sm btn-primary" style="width:40px;"><span class="glyphicon glyphicon-edit"></span></button>' + 
+            "defaultContent": '<button type="button" id="edit" class="btn btn-sm btn-primary" style="width:40px;"><span class="glyphicon glyphicon-edit"></span></button>' + 
             '<button id="del" type="button" class="btn btn-sm btn-primary" style="width:40px;margin-left:10px;"><span class="glyphicon glyphicon-remove"></span></button>' 
         }  
     ]
@@ -250,24 +273,42 @@ $('#example1 tbody').on('click', '#del', function () {
     var data = table.row($(this).parents('tr')).data();
     var row = $(this);
     console.log(row);
-    $.ajax({
-        url: "<%=mypath %>/dishmanager/deleteDish?dishid=" + data.dishid,
-        type: "POST",
-        dataType:"JSON"
-    }).done(function (result) {
-        if (result.resultFlag == 1) {
-        	table
-            .row( row.parents('tr') )
-            .remove()
-            .draw();
-        }
-    });
+    if(confirm("确定要删除吗？")){
+    	$.ajax({
+            url: "<%=mypath %>/dishmanager/deleteDish?dishid=" + data.dishid,
+            type: "POST",
+            dataType:"JSON"
+        }).done(function (result) {
+            if (result.resultFlag == 1) {
+            	table
+                .row( row.parents('tr') )
+                .remove()
+                .draw();
+            }
+        });
+    }
+});
+$('#example1 tbody').on('click', '#edit', function(){
+	var table = $('#example1').DataTable();
+	var data = table.row($(this).parents('tr')).data();
+	$("#UpdateDishModel").modal("show");
+	$("#updateDishName").val(data.dishname);
+	$("#updateDishPrice").val(data.dishprice);
+	$("#updateDIshSalePrice").val(data.saleprice);
+	$("#updateDishDescriptioin").val(data.dishdesc);
+	$("#updateDishImageName").val(data.dishimage);
 });
 function myFileUpload(){
 	$("#hiddenFileInput").click();
 }
+function myFileUpload2(){
+	$("#hiddenFileInput2").click();
+}
 function uploadFile(target) {
     $("#newDishImageName").val(target.files[0].name);
+}
+function uploadFile2(target) {
+    $("#updateDishImageName").val(target.files[0].name);
 }
 function addAdish(){
 	$("#addDishModelBox").modal("show");
@@ -280,16 +321,15 @@ function imageUpLoadAndFormSubmit(){
 	    success: function(data){
 	    	console.log(data);
 	    	if(data.resultmsg == 'true'){
-	    		$("#addDishModelBox").modal('hide');
 	    		var table = $('#example1').DataTable();
 	    		var rowNode = table.row.add( {
-	    	        "dishname":       "Tiger Nixon",
-	    	        "dishprice":   "System Architect",
-	    	        "saleprice":     "$3,120",
-	    	        "dishdesc": "2011/04/25",
-	    	        "dishimage":     "Edinburgh",
+	    	        "dishname":       $("#newDishName").val(),
+	    	        "dishprice":   	$("#newDishPrice").val(),
+	    	        "saleprice":     $("#newDIshSalePrice").val(),
+	    	        "dishdesc": $("#newDishDescriptioin").val(),
+	    	        "dishimage":     $("#newDishImageName").val(),
 	    	    } ).draw().node();;
-	    		
+	    	    $("#addDishModelBox").modal('hide');
 	    		$( rowNode )
 	    	    	.css( 'color', '#3c8dbc' )
 	    	    	.animate( { color: 'black' } );
@@ -297,17 +337,6 @@ function imageUpLoadAndFormSubmit(){
 	    	}
 		}
 	});
-	<%-- $.ajaxFileUpload({  
-	    type: "POST",  
-	    url: "<%=mypath %>/dishmanager/imageUpload",  
-	    secureuri : false,//是否启用安全提交，默认为false  
-	    fileElementId:'hiddenFileInput',//文件选择框的id属性  
-	    dataType: 'json',//服务器返回的格式  
-	    async : true,  
-	    success: function(data){  
-	        console.log(data);
-	    }
-	}); --%>
 }
 </script>
 </body>

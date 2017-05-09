@@ -40,7 +40,7 @@
 			</div>
 		
 			<div class="controlinfo">
-				<input type="submit" value="同意以下协议并注册">
+				<input type="submit" value="同意以下协议并注册" style="width:180px;">
 			</div>
 			
 			<div style="text-align:left;color:red;padding-top:10px;">

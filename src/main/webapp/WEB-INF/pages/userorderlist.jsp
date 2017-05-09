@@ -12,6 +12,7 @@
 <link href="<%=path %>/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script src="<%=path %>/static/jquery/jquery.min.js"></script>
 <script src="<%=path %>/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="<%=path %>/static/js/jquery.form.js"></script>
 <title>外卖点餐系统个人中心</title>
 </head>
 <body>
@@ -104,6 +105,13 @@
 											<td id="totalCountTd" colspan="2" style="text-align:right;"><b>金额：￥${o.totalPrice}</b></td>
 										</tr>
 									</tbody>
+									<tfoot>
+										<tr>
+											<th colspan="2">
+												<div><a href="javascript:commontModal(${o.shopid},${user.userid})" style="text-decoration: none;color:#FFA735;">评价商家:</a></div>
+											</th>
+										</tr>
+									</tfoot>
 								</table>
 							</c:forEach>
 						</div>
@@ -115,7 +123,37 @@
 				</div>
 			</div>
 			<div id="anti_token" data-token="QTj3VDqooFmmNEUBLK7YcAsKstAE7PyB/9euLGm1JjPF6nuhaO+5OgGnD/QK7jCz"></div>
-	
+			<div class="modal fade" tabindex="-1" role="dialog" id="commentModalBox">
+			  <div class="modal-dialog" role="document" style="width:400px;">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h5 class="modal-title"><b>添加评论内容：</b></h5>
+			      </div>
+			      <div class="modal-body">
+			       	<form id="userCommontForm" class="myform">
+			       		<textarea name="commcontent" rows="8" cols="53" style="resize: none;"></textarea>
+			       		<span style="color:black;">点击星星为店铺打分：</span>
+			       		<div style="display:inline;">
+			       			<span class="glyphicon glyphicon-star"></span>
+				       		<span class="glyphicon glyphicon-star"></span>
+				       		<span class="glyphicon glyphicon-star"></span>
+				       		<span class="glyphicon glyphicon-star"></span>
+				       		<span class="glyphicon glyphicon-star"></span>
+			       		</div>
+			       		
+			       		<input name="shopid" id="commontShopId" style="display:none;"/>
+			       		<input name="userid" id="commontUserId" style="display:none;"/>
+			       		<input name="score" id="commontScore" style="display:none;">
+			       	</form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			        <button type="button" class="btn btn-primary" onclick="submitComment()">确定</button>
+			      </div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -126,6 +164,40 @@
 		}else {
 			$("#orderlistshow").css("display","none");
 			$("#noorderlistshow").css("display","block");
+		}
+		
+		function commontModal(shopid, userid){
+			$("#commentModalBox").modal("show");
+			$("#commontShopId").val(shopid);
+			$("#commontUserId").val(userid);
+		}
+		
+		$(".glyphicon-star").click(function(){
+			$(this).parent().find("span").css("color", "#a5a7ab");
+			
+			var index = $(this).index();
+			$("#commontScore").val(index + 1);
+			var fullIndex = index;
+			while(fullIndex >= 0){
+				$(this).parent().find("span").eq(fullIndex).css("color", "yellow");
+				fullIndex--;
+			}
+			console.log(index);
+			
+		});
+		
+		function submitComment(){
+			$("#userCommontForm").ajaxSubmit({
+				type: "POST",
+				url:"<%=path %>/submitComment",
+				dataType: "json",
+			    success: function(data){
+			    	console.log(data);
+			    	if(data.resultFlag == 1){
+			    	    $("#commentModalBox").modal('hide');
+			    	}
+				}
+			});
 		}
 	</script>
 </body>

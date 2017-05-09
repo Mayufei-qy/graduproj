@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mashirong.IDao.CommentMapper">
+	<select id="selectAllCommentByShopId" parameterType="int" resultType="com.mashirong.domain.Comment">
+		SELECT 
+		c.commId AS commid, c.shopId AS shopid, c.userId AS userid, c.score AS score,
+		c.commContent AS commcontent, c.commParentId AS commParentid, c.commTime as commtime,
+		u.email
+		FROM comment c
+		LEFT JOIN user u ON c.userId=u.userId 
+		WHERE shopId=#{shopId};
+	</select>
+	<insert id="insert" parameterType="com.mashirong.domain.Comment">
+		INSERT INTO comment(commId, shopId, userId, 
+      	score, commContent, commParentId)
+    	VALUES (#{commid,jdbcType=INTEGER}, #{shopid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      	#{score,jdbcType=INTEGER}, #{commcontent,jdbcType=VARCHAR}, #{commParentid,jdbcType=INTEGER})
+	</insert>
+</mapper>
