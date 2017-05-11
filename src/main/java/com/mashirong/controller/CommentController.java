@@ -34,6 +34,15 @@ public class CommentController {
 		return "/commentpage.jsp";
 	}
 	
+	@RequestMapping("/getCountOfComment")
+	@ResponseBody
+	public Map getCountOfComment(int shopid){
+		Map<String,Object> map = new HashMap<>();
+		int result = cs.getCountOfComment(shopid);
+		map.put("resultTag", result);
+		return map;
+	}
+	
 	@RequestMapping("/submitComment")
 	@ResponseBody
 	public Map<String, Object> submitComment(Comment comment){

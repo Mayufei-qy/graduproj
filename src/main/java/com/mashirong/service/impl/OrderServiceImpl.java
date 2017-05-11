@@ -35,4 +35,22 @@ public class OrderServiceImpl implements OrderService{
 		return om.getOrderByUserId(userid);
 	}
 
+	@Override
+	public List<Order> getOrdersOfSeller(int shopid) {
+		// TODO Auto-generated method stub
+		return om.getOrderByShopId(shopid);
+	}
+
+	@Override
+	public int getCountOfNewOrder(int shopid) {
+		// TODO Auto-generated method stub
+		return om.countOfNewOrder(shopid);
+	}
+
+	@Override
+	public int changeOrderToOld(int orderid) {
+		// TODO Auto-generated method stub
+		return om.changeOrderToOld(orderid);
+	}
+
 }

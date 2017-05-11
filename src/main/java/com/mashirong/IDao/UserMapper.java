@@ -1,5 +1,7 @@
 package com.mashirong.IDao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.mashirong.domain.User;
 
 public interface UserMapper {
@@ -18,4 +20,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+    
+    int changeUserNameByUserId(@Param("username") String username, @Param("userid") Integer userid);
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <% 
 	String mypath = request.getContextPath();
 %>
@@ -127,92 +128,52 @@
   <div class="content-wrapper">
     <!-- Main content -->
     <section class="content">
-    	<div class="container-fluid">
-		  <div class="row">
-		  	<div class="col-md-5" style="padding-top:30px;margin-left:5%;" >
-				<table class="mytable">
-				  <thead>
-				    <tr>
-				      <th style="width:120px;"></th>
-				      <th style="width:200px;"></th>
-				      <th></th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				    <tr>
-				      <td>邮&nbsp;&nbsp;&nbsp;箱：</td>
-				      <td>${user.email}</td>
-				      <td><a href="javascript:showmybox();">修改</a></td>
-				    </tr>
-				    <tr>
-				      <td>手机号：</td>
-				      <td>${user.phonenum}</td>
-				      <td><a>修改</a></td>
-				    </tr>
-				    <tr>
-				      <td>用户名：</td>
-				      <td>${user.username}</td>
-				      <td><a>修改</a></td>
-				    </tr>
-				    <tr>
-				      <td>密&nbsp;&nbsp;&nbsp;码：</td>
-				      <%-- <td><input type="password" value="${user.password}"></td> --%>
-				      <td><span>•••••••••</span></td>
-				      <td><a>修改</a></td>
-				    </tr>
-				    <tr>
-				      <td>店铺名称：</td>
-				      <td>${shop.shopname}</td>
-				      <td><a>修改</a></td>
-				    </tr>
-				    <tr>
-				      <td>店铺地址：</td>
-				      <td>${shop.shopaddress}</td>
-				      <td><a>修改</a></td>
-				    </tr>
-				    <tr>
-				      <td>店铺电话：</td>
-				      <td>${shop.shopphonenum}</td>
-				      <td><a>修改</a></td>
-				    </tr>
-				  </tbody>
+    	<div style="padding-top:30px;" id = "orderlistshow">
+			<c:forEach items="${newOrderlist}" var="o" varStatus="status">
+				<table class="table table-condensed" style="width:100%;background:#F5F5F5; text-align:left;">
+					<thead>
+						<tr>
+							<th style="height:45px;">
+								<div>订单号:${o.flowNum}</div>
+							</th>
+							<th style="height:45px; text-align:right;">
+								<div>下单时间：${o.orderTime}</div>
+							</th >
+						</tr>
+					</thead>
+					<tbody id="orderTableTbody">
+						<c:forEach items="${o.dishList}" var="i" varStatus="status">
+							<tr style="text-indent:45px;">
+								<td>${i.dishName}</td>
+								<td id="packingBoxTd">${i.dishPrice} * ${i.dishnum}</td>
+							</tr>
+						</c:forEach>
+						<tr style="text-indent:45px;">
+								<td>餐盒</td>
+								<td id="packingBoxTd">${o.packingBox}</td>
+						</tr>
+						<tr style="text-indent:45px;">
+								<td>备注</td>
+								<td id="packingBoxTd">${o.orderNote}</td>
+						</tr>
+						<tr>
+							<td id="totalCountTd"><b>下单人：${o.userName}----电话：${o.userPhonenum}</b></td>
+							<td id="totalCountTd" style="text-align:right;"><b>金额：￥${o.totalPrice}</b></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th colspan="2">
+								<div><button class="btn btn-primary" onclick="changeOrderTypeToOld(${o.orderid}, this)" style="font-size:12px;padding: 4px 12px;">确认接单</button></div>
+							</th>
+						</tr>
+					</tfoot>
 				</table>
-			</div>
-			<input style="display:none;" value="${shop.shopid}" id="hiddenShopIdDomain">
-			<div class="col-md-6" style="padding-top:30px;font-size:16px;">
-				<div style="padding-top:10px;display:inline;">店铺公告：</div>
-				<div>
-					<textarea rows="10" cols="60" style="border:none;resize: none;margin-top:10px;display:inline;"></textarea>
-					<button class="btn btn-primary" style="border-radius: 0px;float:right;height:30px;margin-top:225px;padding:4px 10px;">发布</button>
-				</div>
-			</div>
-		  </div>
+			</c:forEach>
 		</div>
     	
     </section>
   </div>
-  
-  <div class="modal fade" tabindex="-1" role="dialog" id="NewOrderMsgModal">
-	  <div class="modal-dialog" role="document" style="width:400px;">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h5 class="modal-title"><b>新订单提醒</b></h5>
-		  </div>
-		  <div class="modal-body">
-			有<span id="newOrderNumSpan"></span>条新订单，去处理新订单？
-			<audio id="newOrderMsg">
-			    <source = src="<%=mypath %>/static/voice/voice.mp3" type="audio/mp3">
-				Your browser does not support the audio element.
-			</audio>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-			<button type="button" class="btn btn-primary" onclick="goNewOrderPage()">确定</button>
-		  </div>
-		</div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
@@ -223,26 +184,20 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <script type="text/javascript" src="<%=mypath %>/static/jquery/jquery.min.js"></script>
-<script src="<%=mypath %>/static/bootstrap/js/bootstrap.min.js"></script>
 <script src="<%=mypath %>/static/js/app.min.js"></script>
 <script type="text/javascript">
-setInterval(function() {
-	var shopid = $("#hiddenShopIdDomain").val();
+function changeOrderTypeToOld(orderid, target){
+	var button = target;
 	$.ajax({
-		url:'<%=mypath %>/getCountOfNewOrder?shopId=' + shopid,
+		url:'<%=mypath %>/changeOrderToOld?orderid=' + orderid,
 		type:'post',
 		dataType:'json',
 		success:function(result){
-			if(result.newOrderFlag == "true"){
-				$("#NewOrderMsgModal").modal("show");
-				$("#newOrderNumSpan").text(result.newDishNum);
-				document.getElementById("newOrderMsg").play();
+			if(result.resultFlag == 1){
+				$(button).parents("table:first").hide();
 			}
 		}
 	});
-}, 30000);
-function goNewOrderPage(){
-	location.href='<%=mypath %>/toSellerOrderListPage?urlFlag=1'
 }
 </script>
 </body>

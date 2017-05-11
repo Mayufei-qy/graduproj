@@ -70,4 +70,10 @@ public class CommentServiceImpl implements CommentService{
 		// TODO Auto-generated method stub
 		return cm.insert(comment);
 	}
+
+	@Override
+	public int getCountOfComment(int shopid) {
+		// TODO Auto-generated method stub
+		return cm.getCountOfComment(shopid);
+	}
 }

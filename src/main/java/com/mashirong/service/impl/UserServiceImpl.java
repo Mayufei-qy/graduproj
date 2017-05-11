@@ -46,4 +46,16 @@ public class UserServiceImpl implements UserService{
 		um.insert(user);
 	}
 
+	@Override
+	public User getUserInfo(int userid) {
+		// TODO Auto-generated method stub
+		return um.selectByPrimaryKey(userid);
+	}
+
+	@Override
+	public int changeUserNameByUserId(String username, int userid) {
+		// TODO Auto-generated method stub
+		return um.changeUserNameByUserId(username, userid);
+	}
+
 }

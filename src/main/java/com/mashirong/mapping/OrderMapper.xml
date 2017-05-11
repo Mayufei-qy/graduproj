@@ -8,9 +8,10 @@
     <result column="flowNum" jdbcType="VARCHAR" property="flownum" />
     <result column="orderTime" jdbcType="TIMESTAMP" property="ordertime" />
     <result column="orderNote" jdbcType="VARCHAR" property="ordernote" />
+    <result column="orderType" jdbcType="INTEGER" property="orderType" />
   </resultMap>
   <sql id="Base_Column_List">
-    orderId, userId, shopId, flowNum, orderTime, orderNote
+    orderId, userId, shopId, flowNum, orderTime, orderNote, orderType
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -18,11 +19,24 @@
     from ordertb
     where orderId = #{orderid,jdbcType=INTEGER}
   </select>
+  <select id="countOfNewOrder" parameterType="java.lang.Integer" resultType="int">
+    SELECT 
+    COUNT(*)
+    FROM ordertb o
+	WHERE o.shopId=#{shopid}
+	AND o.orderType=0;
+  </select>
   <select id="getOrderByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from ordertb
     where userId = #{userid,jdbcType=INTEGER} order by orderTime desc
+  </select>
+  <select id="getOrderByShopId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ordertb
+    where shopId = #{shopid,jdbcType=INTEGER} order by orderTime desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from ordertb
@@ -107,6 +121,11 @@
       flowNum = #{flownum,jdbcType=VARCHAR},
       orderTime = #{ordertime,jdbcType=TIMESTAMP},
       orderNote = #{ordernote,jdbcType=VARCHAR}
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+  <update id="changeOrderToOld" parameterType="java.lang.Integer">
+    update ordertb
+    set orderType = 1
     where orderId = #{orderid,jdbcType=INTEGER}
   </update>
 </mapper>

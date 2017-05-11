@@ -71,7 +71,7 @@
 						<span class="title">账号管理</span>
 						<ul>
 							<li><a href="<%=path %>/toUserAccount" id="myaccountlia" class="borderradius-1 my-account ">我的账号</a></li>
-							<li><a href="/favorite/restaurant" id="myfavoritelia" class="borderradius-1 my-favorite ">我的收藏</a></li>
+							<li><a href="" id="myfavoritelia" class="borderradius-1 my-favorite ">我的收藏</a></li>
 						</ul>
 					</span>
 				</div>
@@ -122,7 +122,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="anti_token" data-token="QTj3VDqooFmmNEUBLK7YcAsKstAE7PyB/9euLGm1JjPF6nuhaO+5OgGnD/QK7jCz"></div>
+			<!-- <div id="anti_token" data-token="QTj3VDqooFmmNEUBLK7YcAsKstAE7PyB/9euLGm1JjPF6nuhaO+5OgGnD/QK7jCz"></div> -->
 			<div class="modal fade" tabindex="-1" role="dialog" id="commentModalBox">
 			  <div class="modal-dialog" role="document" style="width:400px;">
 			    <div class="modal-content">
@@ -198,6 +198,15 @@
 			    	}
 				}
 			});
+		}
+		
+		function islogined(){
+			var logStr = $("#dropdownMenu1").val();
+			if(logStr == undefined){
+				alert('请先登录');
+			}else{
+				location.href='<%=path %>/submitShopInfo';
+			}
 		}
 	</script>
 </body>

@@ -13,6 +13,7 @@
 <link href="<%=path %>/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script src="<%=path %>/static/jquery/jquery.min.js"></script>
 <script src="<%=path %>/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="<%=path %>/static/js/jquery.form.js"></script>
 <title>外卖点餐系统个人中心账户</title>
 </head>
 <script type="text/javascript">
@@ -77,8 +78,8 @@ $(document).ready(function(){
 					<span href="javascript:;" class="tab">
 						<span class="title">账号管理</span>
 						<ul>
-							<li><a href="/account/setting" class="borderradius-1 my-account active">我的账号</a></li>
-							<li><a href="/favorite/restaurant" class="borderradius-1 my-favorite ">我的收藏</a></li>
+							<li><a href="<%=path %>/toUserAccount" class="borderradius-1 my-account active">我的账号</a></li>
+							<li><a href="" class="borderradius-1 my-favorite ">我的收藏</a></li>
 						</ul>
 					</span>
 				</div>
@@ -96,29 +97,29 @@ $(document).ready(function(){
 							  <tbody>
 							    <tr>
 							      <td>邮&nbsp;&nbsp;&nbsp;箱：</td>
-							      <td>${user.email}</td>
+							      <td>${userinfo.email}</td>
 							      <td><a href="javascript:showmybox();">修改</a></td>
 							    </tr>
 							    <tr>
 							      <td>手机号：</td>
-							      <td>${user.phonenum}</td>
-							      <td><a>修改</a></td>
+							      <td>${userinfo.phonenum}</td>
+							      <td><a href="javascript:">修改</a></td>
 							    </tr>
 							    <tr>
 							      <td>用户名：</td>
-							      <td>${user.username}</td>
-							      <td><a>修改</a></td>
+							      <td>${userinfo.username}</td>
+							      <td><a href="javascript:showUserNameUpdateBox()">修改</a></td>
 							    </tr>
 							    <tr>
 							      <td>密&nbsp;&nbsp;&nbsp;码：</td>
 							      <%-- <td><input type="password" value="${user.password}"></td> --%>
 							      <td><span>•••••••••</span></td>
-							      <td><a>修改</a></td>
+							      <td><a href="javascript:">修改</a></td>
 							    </tr>
 							    <tr>
 							      <td>地&nbsp;&nbsp;&nbsp;址：</td>
-							      <td>${user.address}</td>
-							      <td><a>修改</a></td>
+							      <td>${userinfo.address}</td>
+							      <td><a href="javascript:">修改</a></td>
 							    </tr>
 							  </tbody>
 							</table>
@@ -131,7 +132,7 @@ $(document).ready(function(){
 	</div>
 	
 	<div class="mybox">
-		<div class="mybox2">
+		<div class="mybox2 f1">
 			<div class="login5">
 				<h2>修改邮箱</h2>
 				<a class="close"></a>
@@ -147,7 +148,32 @@ $(document).ready(function(){
 							<span>验证码：</span><input type="password" name="user_possword" />
 						</div>
 						<div class="login5left2">
-							<input class="dl" type="submit" value="确定"><span><a>取消</a></span>
+							<input class="dl" type="submit" value="确定"><span><a href="javascript:dismissmybox()">取消</a></span>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="mybox">
+		<div class="mybox2 f2">
+			<div class="login5">
+				<h2>修改用户名</h2>
+				<a class="close"></a>
+			</div>
+			<div class="login51">
+				<form name="login5form" id="changeUseraNameForm">
+					<div class="login5left" style="width:320px;">
+						<span></span>
+						<div class="login5left1" style="text-align:left;">
+							<span>当前用户名：</span><span>${userinfo.username}</span>
+						</div>
+						<div class="login5left1">
+							<span>新用户名：</span><input type="text" name="username" />
+						</div>
+						<div class="login5left2">
+							<input class="dl" type="button" value="确定" onclick="submitUserNameChangeForm()" style="margin-left:20px;"><span><a href="javascript:dismissmybox()">取消</a></span>
 						</div>
 					</div>
 				</form>
@@ -157,7 +183,27 @@ $(document).ready(function(){
 </body>
 <script type="text/javascript">
 	function showmybox(){
-		$('.mybox2').show();
+		$('.f1').show();
+	}
+	function dismissmybox(){
+		$('.mybox2').hide();
+	}
+	function showUserNameUpdateBox(){
+		$('.f2').show();
+	}
+	
+	function submitUserNameChangeForm(){
+		$("#changeUseraNameForm").ajaxSubmit({
+			type: "POST",
+			url:"<%=path %>/changeUserName",
+			dataType: "json",
+		    success: function(data){
+		    	if(data.flag == 'true'){
+		    		/* $('.mybox2').hide(); */
+		    		location.href='<%=path %>/toUserAccount';
+		    	}
+			}
+		});
 	}
 </script>
 </html>

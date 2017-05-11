@@ -10,6 +10,14 @@
 		LEFT JOIN user u ON c.userId=u.userId 
 		WHERE shopId=#{shopId};
 	</select>
+	
+	<select id="getCountOfComment" parameterType="java.lang.Integer" resultType="int">
+	    SELECT 
+	    COUNT(*)
+	    FROM comment o
+		WHERE o.shopId=#{shopid};
+	</select>
+	
 	<insert id="insert" parameterType="com.mashirong.domain.Comment">
 		INSERT INTO comment(commId, shopId, userId, 
       	score, commContent, commParentId)

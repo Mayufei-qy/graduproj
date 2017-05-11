@@ -13,11 +13,17 @@ public interface OrderMapper {
 
     int insertSelective(Order record);
     
+    int countOfNewOrder(@Param("shopid") Integer shopid);
+    
     List<Order> getOrderByUserId(@Param("userid") Integer userid);
+    
+    List<Order> getOrderByShopId(@Param("shopid") Integer shopid);
 
     Order selectByPrimaryKey(Integer orderid);
 
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+    
+    int changeOrderToOld(@Param("orderid") Integer orderid);
 }

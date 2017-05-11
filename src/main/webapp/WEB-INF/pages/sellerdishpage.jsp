@@ -82,9 +82,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-circle-o"></i> 新订单</a></li>
+            <li><a href="<%=mypath %>/toSellerOrderListPage?urlFlag=1"><i class="fa fa-circle-o"></i> 新订单</a></li>
             <li><a href=""><i class="fa fa-circle-o"></i> 催&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i> 历史订单</a></li>
+            <li><a href="<%=mypath %>/toSellerOrderListPage?urlFlag=0"><i class="fa fa-circle-o"></i> 历史订单</a></li>
           </ul>
         </li>
         <li class="treeview">

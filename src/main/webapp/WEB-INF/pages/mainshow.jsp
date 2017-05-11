@@ -109,7 +109,7 @@ $(document).ready(function(){
 					<div class="login5left">
 						<span></span>
 						<div class="login5left1">
-							<input type="text" name="email" id="email" placeholder="用户名/手机号/邮箱" /></input>
+							<input type="text" name="email" id="email" placeholder="邮箱" /></input>
 						</div>
 						<div class="login5left1">
 							<input type="password" name="password" id="password" placeholder="密码" /></input>

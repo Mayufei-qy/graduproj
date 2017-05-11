@@ -95,10 +95,10 @@ $(document).ready(function(){
 					<div class="rest-info">
 					    <div class="right-bar fr clearfix ct-lightgrey">
 
-					      <div class="fl average-speed">
+					      <a href="<%=path %>/getComment?shopid=${shopinfo.shopid }" class="fl average-speed" style="text-decoration: none;">
 					        <div class="desc">评价</div>
-					        <div class="nu">(11111)</div>
-					      </div>
+					        <div class="nu"><span id="commentNumDomain">0</span></div>
+					      </a>
 
 					      <div class="fl in-ti">
 					        <div class="desc">收藏</div>
@@ -168,7 +168,7 @@ $(document).ready(function(){
     		</div>
 		</div>
 	</div>
-	
+	<input id="shopidDomainIpt" style="display:none;" value="${shopinfo.shopid }">
 	<div class="box">
 		<div class="box2">
 			<div class="login5">
@@ -226,6 +226,18 @@ $(document).ready(function(){
 			});
 		});
 	
+	</script>
+	
+	<script type="text/javascript">
+		var shopid = $("#shopidDomainIpt").val();
+		$.ajax({
+			url:'<%=path %>/getCountOfComment?shopid=' + shopid,
+			type:'post',
+			dataType:'json',
+			success:function(result){
+				$("#commentNumDomain").text(result.resultTag);
+			}
+		});
 	</script>
 
 </body>

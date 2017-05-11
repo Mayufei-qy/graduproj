@@ -14,6 +14,8 @@ public class Order {
     private Date ordertime;
 
     private String ordernote;
+    
+    private Integer orderType;
 
     public Integer getOrderid() {
         return orderid;
@@ -63,9 +65,17 @@ public class Order {
         this.ordernote = ordernote == null ? null : ordernote.trim();
     }
 
+	public Integer getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(Integer orderType) {
+		this.orderType = orderType;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [orderid=" + orderid + ", userid=" + userid + ", shopid=" + shopid + ", flownum=" + flownum
-				+ ", ordertime=" + ordertime + ", ordernote=" + ordernote + "]";
+				+ ", ordertime=" + ordertime + ", ordernote=" + ordernote + ", orderType=" + orderType + "]";
 	}
 }

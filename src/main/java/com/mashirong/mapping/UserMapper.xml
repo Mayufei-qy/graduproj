@@ -126,4 +126,9 @@
       isSeller = #{isseller,jdbcType=BIT}
     where userId = #{userid,jdbcType=INTEGER}
   </update>
+  <update id="changeUserNameByUserId">
+    update user
+    set  userName = #{username,jdbcType=VARCHAR}
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
 </mapper>

@@ -27,6 +27,7 @@ import com.mashirong.domain.TmpOrder;
 import com.mashirong.domain.User;
 import com.mashirong.service.OrderConService;
 import com.mashirong.service.OrderService;
+import com.mashirong.service.UserService;
 
 @Controller
 public class OrderController {
@@ -43,6 +44,9 @@ public class OrderController {
 	@Autowired
 	private OrderConService ocs;
 	
+	@Autowired
+	private UserService us;
+	
 	@RequestMapping("/toOrderPage")
 	public String toOrderPage(int shopId, int dishId, Model model){
 		/*model.addAttribute("shopId", shopId);
@@ -52,6 +56,28 @@ public class OrderController {
 		model.addAttribute("shopinfo", shop);
 		model.addAttribute("dish_of_shop", dishList);
 		return "/shoppage.jsp";
+	}
+	@RequestMapping("/changeOrderToOld")
+	@ResponseBody
+	public Map changeOrderToOld(int orderid){
+		Map<String, Object> map = new HashMap<>();
+		int resultFlag = os.changeOrderToOld(orderid);
+		map.put("resultFlag", resultFlag);
+		return map;
+	}
+	@RequestMapping("/getCountOfNewOrder")
+	@ResponseBody
+	public Map getCountOfNewOrder(int shopId){
+		String newOrderFlag = "false";
+		Map<String, Object> map = new HashMap<>();
+		int count = os.getCountOfNewOrder(shopId);
+		if(count > 0){
+			newOrderFlag = "true";
+			map.put("newDishNum", count);
+		}
+		map.put("newOrderFlag", newOrderFlag);
+		
+		return map;
 	}
 
 	@RequestMapping("/toConfigOrderPage")
@@ -75,8 +101,8 @@ public class OrderController {
 		}
 		os.GenerateOrder(order);
 		
-		System.out.println(list.size());
-		System.out.println(order);
+		/*System.out.println(list.size());
+		System.out.println(order);*/
 		for(TmpDish td1:list){
 			orderCon.setOrderid(order.getOrderid());
 			orderCon.setDishid(td1.getDishId());
@@ -124,6 +150,64 @@ public class OrderController {
 			model.addAttribute("orderlist", orderList);
 			model.addAttribute("haveorders", flagStr);
 			return "/userorderlist.jsp";
+		}else{
+			return "redirect:/";
+		}
+	}
+	@RequestMapping("/toSellerOrderListPage")
+	public String toSellerOrderListPage(int urlFlag, HttpSession hSession, Model model){
+		Shop shop = (Shop) hSession.getAttribute("shop");
+		if(shop != null){
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			List<TmpOrder> oldOrderList = new ArrayList<>();
+			List<TmpOrder> newOrderList = new ArrayList<>();
+			User ordinaryUser = null;
+			List<Order> list = os.getOrdersOfSeller(shop.getShopid());
+			/*System.out.println("list.size:" + list.size());
+			System.out.println("shopid:" + shop.getShopid());*/
+			for(Order order : list){
+				int packingBox = 0;
+				float totalPrice = 0;
+				TmpOrder tmpOrder = new TmpOrder();
+				tmpOrder.setOrderid(order.getOrderid());
+				tmpOrder.setShopid(order.getShopid());
+				tmpOrder.setFlowNum(order.getFlownum());
+				tmpOrder.setOrderTime(df.format(order.getOrdertime()));
+				tmpOrder.setOrderNote(order.getOrdernote());
+				List<OrderCon> tmpList = ocs.getOrderConsOfOrder(order.getOrderid());
+				Iterator it = tmpList.iterator();
+				while(it.hasNext()){
+					OrderCon oc = (OrderCon) it.next();
+					totalPrice += (oc.getDishPrice() * oc.getDishnum() + oc.getDishnum()) ;
+					packingBox += oc.getDishnum();
+				}
+				ordinaryUser = us.getUserInfo(order.getUserid());
+				tmpOrder.setUserName(ordinaryUser.getEmail());
+				tmpOrder.setUserPhonenum(ordinaryUser.getPhonenum());
+				tmpOrder.setTotalPrice(totalPrice);
+				tmpOrder.setPackingBox(packingBox);
+				tmpOrder.setDishList(tmpList);
+				if(order.getOrderType() == 0){
+					newOrderList.add(tmpOrder);
+				}else{
+					oldOrderList.add(tmpOrder);
+				}
+				
+			}
+			/*System.out.println(user);
+			System.out.println(orderList.size());*/
+			/*String flagStr = "false";
+			if(orderList.size() >= 1){
+				flagStr = "true";
+			}*/
+			model.addAttribute("newOrderlist", newOrderList);
+			model.addAttribute("oldOrderList", oldOrderList);
+			if(urlFlag == 1){
+				return "/sellerorderpage.jsp";
+			}else{
+				return "/selleroldorderpage.jsp";
+			}
+			
 		}else{
 			return "redirect:/";
 		}
