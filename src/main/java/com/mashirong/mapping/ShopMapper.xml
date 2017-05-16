@@ -23,6 +23,13 @@
     where shopId = #{shopid,jdbcType=INTEGER}
   </select>
   
+  <select id="getAllApplyShop" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shop
+    where shopType = 0;
+  </select>
+  
   <select id="selectByUserId" parameterType="int" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

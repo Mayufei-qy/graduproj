@@ -3,7 +3,7 @@
 <% 
 	String mypath = request.getContextPath();
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -36,7 +36,7 @@
 	</div>
 	<HR width="86%" color=#987cb9 SIZE=10>
 	<div style="padding-left:230px;">
-		<form action="">
+		<form id="newShopForm">
 			<table class="mytable" style="">
 			  <thead>
 			    <tr>
@@ -48,33 +48,33 @@
 			  <tbody>
 			    <tr>
 			      <td>店铺名称：</td>
-			      <td><input></td>
+			      <td><input name="shopname"></td>
 			    </tr>
 			    <tr>
 			      <td>店主姓名：</td>
-			      <td><input></td>
+			      <td><input name="ownername"></td>
 			    </tr>
 			    <tr>
 			      <td>身份证号：</td>
-			      <td><input></td>
+			      <td><input name="idcnum"></td>
 			    </tr>
 			    <tr>
 			      <td>营业执照编号：</td>
-			      <td><input></td>
+			      <td><input name="licensenum"></td>
 			    </tr>
 			    <tr>
 			      <td>店铺电话：</td>
-			      <td><input></td>
+			      <td><input name="shopphonenum"></td>
 			    </tr>
 			    <tr>
 			      <td>店铺地址：</td>
-			      <td><input></td>
+			      <td><input name="shopaddress"></td>
 			    </tr>
 			    <tr>
 			      <td></td>
 			      <td>
-			      	<input type="submit" value="确定" class="btn btn-primary" style="width:80px;background:#55ACEF;border:none;">
-			      	<a class="btn btn-primary" style="width:80px;background:#55ACEF;border:none;float:right;">取消</a>
+			      	<input type="button" value="确定" class="btn btn-primary" onclick="imageUpLoadAndFormSubmit()" style="width:80px;background:#55ACEF;border:none;">
+			      	<a class="btn btn-primary" style="width:80px;background:#55ACEF;border:none;float:right;">重置</a>
 			      </td>
 			    </tr>
 			  </tbody>
@@ -82,6 +82,26 @@
 		</form>
 	</div>
 </div>
-
+<script type="text/javascript" src="<%=mypath %>/static/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="<%=mypath %>/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="<%=mypath %>/static/js/jquery.form.js"></script>
+<script type="text/javascript">
+function imageUpLoadAndFormSubmit(){
+	$("#newShopForm").ajaxSubmit({
+		type: "POST",
+		url:"<%=mypath %>/insertNewShop",
+		dataType: "json",
+	    success: function(data){
+	    	console.log(data);
+	    	if(data.result == 'true'){
+	    		alert("提交成功，请等待管理员审核！");
+	    	}else{
+	    		alert("提交失败，请重新填写信息进行提交！");
+	    		location.href='<%=mypath %>/submitShopInfo';
+	    	}
+		}
+	});
+}
+</script>
 </body>
 </html>

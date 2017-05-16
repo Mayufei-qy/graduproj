@@ -1,5 +1,7 @@
 package com.mashirong.IDao;
 
+import java.util.List;
+
 import com.mashirong.domain.Shop;
 
 public interface ShopMapper {
@@ -12,6 +14,8 @@ public interface ShopMapper {
     Shop selectByPrimaryKey(Integer shopid);
     
     Shop selectByUserId(Integer userid);
+    
+    List<Shop> getAllApplyShop();
 
     int updateByPrimaryKeySelective(Shop record);
 

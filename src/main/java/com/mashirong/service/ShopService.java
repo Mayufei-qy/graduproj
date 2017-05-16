@@ -4,4 +4,5 @@ import com.mashirong.domain.Shop;
 
 public interface ShopService {
 	Shop getShopByUserId(int userid);
+	int insertNewShop(Shop shop);
 }

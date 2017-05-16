@@ -117,7 +117,7 @@
 						</div>
 						<div class="tips-inner borderradius-5" id = "noorderlistshow">
 							<i class="icon i-uncomment fl"></i>
-							<span class="fl">您暂时还没有订单，<a class="cc-lightred-new" href="/">猛击这里</a>，现在就来一份外卖！</span>
+							<span class="fl">您暂时还没有订单！</span>
 						</div>
 					</div>
 				</div>

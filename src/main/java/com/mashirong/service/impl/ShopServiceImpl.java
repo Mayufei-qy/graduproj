@@ -18,5 +18,11 @@ public class ShopServiceImpl implements ShopService{
 		// TODO Auto-generated method stub
 		return sm.selectByUserId(userid);
 	}
+
+	@Override
+	public int insertNewShop(Shop shop) {
+		// TODO Auto-generated method stub
+		return sm.insert(shop);
+	}
 	
 }
